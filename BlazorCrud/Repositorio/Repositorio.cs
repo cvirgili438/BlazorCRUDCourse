@@ -22,6 +22,7 @@ namespace BlazorCrud.Repositorio
                 libro.Descripcion=actualizarLibro.Descripcion;
                 libro.FechaCreacion=actualizarLibro.FechaCreacion;
                 libro.Paginas= actualizarLibro.Paginas;
+                libro.Precio=actualizarLibro.Precio;
                 _context.Libros.Update(libro);
                 await _context.SaveChangesAsync();
                 return libro;
@@ -44,6 +45,7 @@ namespace BlazorCrud.Repositorio
                     await _context.SaveChangesAsync();
                     return crearLibro;
                 }
+                else { throw new ArgumentNullException("parametros nulos"); }
 
             }
             catch (Exception)

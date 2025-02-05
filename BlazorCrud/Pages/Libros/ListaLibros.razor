@@ -1,0 +1,71 @@
+﻿@page "/libros"
+@using BlazorCrud.Models
+@using BlazorCrud.Repositorio
+@inject IRepositorio _repositorio
+<h1> CRUD con BLAZOR SERVER Y MSSQLLOCALDB</h1>
+<div class="card">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-12">
+                <h2 class="text-dark">
+                    Lista de Libros
+                </h2>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    @foreach (var name in propiedadesDeLibro) 
+                    {
+                        <th>@name</th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var libro in listaLibros) 
+                {
+                    <tr>
+                        <td>@libro.Id</td>
+                        <td>@libro.Titulo</td>
+                        <td>@libro.Descripcion</td>
+                        <td>@libro.Autor</td>
+                        <td>@libro.Paginas</td>
+                        <td>@libro.Precio</td>
+                        <td>@libro.FechaCreacion</td>
+                        <td>
+                            <a class="btn btn-primary btn-sm" href="editar-libro/@libro.Id">
+                                <span class="oi oi-pencil" aria-hidden="true">
+
+                                </span> 
+                                Editar
+                            </a>
+                            <button class="btn btn-danger btn-sm" @onclick=@(()=>BorrarLibro(libro.Id))>
+                                <span aria-hidden="true" class="oi oi-delete"></span> Borrar
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+@code {
+    private List<Libro> listaLibros = new List<Libro>();
+    private List<string> propiedadesDeLibro = new List<string>();
+    protected override async Task OnInitializedAsync()
+    {
+        listaLibros = await _repositorio.GetLibros();
+        var properties = typeof(Libro).GetProperties();
+        foreach (var prop in properties) 
+        {
+            propiedadesDeLibro.Add(prop.Name);
+        }
+    }
+    private async Task BorrarLibro(int libroId) 
+    {
+
+    }
+
+}

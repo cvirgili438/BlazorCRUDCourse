@@ -1,4 +1,5 @@
 using BlazorCrud.Data;
+using BlazorCrud.Repositorio;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +14,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options.UseSqlServer(connectionString);
 });
+builder.Services.AddScoped<IRepositorio,Repositorio>();
 
 var app = builder.Build();
 
