@@ -1,0 +1,107 @@
+﻿@page "/crear-libros"
+@using BlazorCrud.Models
+@using BlazorCrud.Repositorio
+@inject IRepositorio _repositorio
+@inject NavigationManager navigationManager
+<h3>Crear Libro
+
+</h3>
+<div class="card">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-12">
+                <h2 class="text-dark">
+                    Crear nuevo libro
+                </h2>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <EditForm Model="modelLibro" OnValidSubmit="@(()=>ManejadorOnCrearLibro())">
+            <DataAnnotationsValidator></DataAnnotationsValidator>
+            <div class="container">
+                <div class="form-group">
+                    <div class="row">
+
+                        <div class="col-6 offset-3">
+                            <label class="form-label text-center w-100" for="titulo">Titulo</label>
+
+                            <InputText @bind-Value="modelLibro.Titulo" placeholder="ingresa titulo" class="form-control" id="titulo"/>
+                            <ValidationMessage For="()=>modelLibro.Titulo"/>
+                        </div>
+                    </div>
+                    <br />
+
+                    <div class="row">
+
+                        <div class="col-6 offset-3">
+                            <label class="form-label text-center w-100" for="descripcion">Descripcion</label>
+
+                            <InputText @bind-Value="modelLibro.Descripcion" placeholder="ingresa Descricion"
+                            class="form-control" id="descripcion" />
+                            <ValidationMessage For="()=>modelLibro.Descripcion" />
+                        </div>
+                    </div>
+                    <br/>
+
+
+                    <div class="row">
+
+                        <div class="col-6 offset-3">
+                            <label class="form-label text-center w-100" for="Autor">Autor</label>
+
+                            <InputText @bind-Value="modelLibro.Autor" placeholder="ingresa Autor"
+                            class="form-control" id="Autor" />
+                            <ValidationMessage For="()=>modelLibro.Autor" />
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+
+                        <div class="col-6 offset-3">
+                            <label class="form-label text-center w-100" for="Paginas">Paginas</label>
+
+                            <InputNumber @bind-Value="modelLibro.Paginas" placeholder="Ingresa el Precio"
+                            class="form-control" id="Paginas" />
+                            <ValidationMessage For="()=>modelLibro.Paginas" />
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+
+                        <div class="col-6 offset-3">
+                            <label class="form-label text-center w-100" for="Precio">Precio</label>
+
+                            <InputNumber @bind-Value="modelLibro.Precio" placeholder="Ingresa el Precio"
+                            class="form-control" id="Precio" />
+                            <ValidationMessage For="()=>modelLibro.Precio" />
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-6  text-center">
+                            <button type="button" class="btn btn-danger" @onclick="@(()=>navigationManager.NavigateTo("/libros"))">
+                                <span class="oi oi-chevron-left" aria-hidden="true"></span> Volver a la lista
+                            </button>
+                        </div>
+                        <div class="col-6  text-center">
+                            <button type="submit" class="btn btn-success" 
+                            ><span class="oi oi-plus" aria-hidden="true"></span> Crear Libro</button>
+                        </div>
+
+                    </div>
+                    <br />
+
+                </div>
+            </div>
+        </EditForm>
+    </div>
+</div>
+@code{
+    private Libro modelLibro = new Libro();
+    public async Task ManejadorOnCrearLibro() 
+    {
+        var crearLibro = await _repositorio.CrearLibro(modelLibro);
+        navigationManager.NavigateTo("/libros");
+    }
+}

@@ -9,6 +9,11 @@ namespace BlazorCrud.Data
         {
             
         }
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.Entity<Libro>().Property(e=>e.Precio).HasColumnType("decimal(18,2)");
+            base.OnModelCreating(builder);
+        }
         public DbSet<Libro> Libros { get; set; }
     }
 }
